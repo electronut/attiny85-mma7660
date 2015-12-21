@@ -5,7 +5,7 @@ I2C communication is done using the I2CMaster library from Peter Fleury:
 
 http://homepage.hispeed.ch/peterfleury/avr-software.html
 
-This project was also a test-bed for me to get a feel for Atmel Studio 7 
+This project was also a test bed for me to get a feel for Atmel Studio 7 
 and the Atmel ICE debugger.
 
 You can read more here:
