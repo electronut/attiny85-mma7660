@@ -83,25 +83,6 @@ int main()
     
     // main loop 
     while (1) {	
-				
-#if 0
-        ret = i2c_start((0x4C << 1)|0x0);
-		i2c_write(0x04);
-		i2c_rep_start((0x4C << 1)|0x1);
-		data = i2c_readNak();
-
-		ret = i2c_start((0x4C << 1)|0x0);
-		i2c_write(0x07);
-		i2c_write(0b00011001);
-		i2c_stop();
-		
-		_delay_ms(1);
-		
-		ret = i2c_start((0x4C << 1)|0x0);
-		i2c_write(0x02);
-		i2c_rep_start((0x4C << 1)|0x1);
-		data = i2c_readNak();
-#endif
     
     uint8_t x, y, z;
     mma7660_get_data(0x00, &x);

@@ -512,10 +512,10 @@ END GROUP
  .debug_abbrev  0x00000000       0x14 i2cmaster.o
  .debug_abbrev  0x00000014      0x1c2 main.o
 
-.debug_line     0x00000000      0x267
+.debug_line     0x00000000      0x265
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000       0xb2 i2cmaster.o
- .debug_line    0x000000b2      0x1b5 main.o
+ .debug_line    0x000000b2      0x1b3 main.o
 
 .debug_frame    0x00000000       0x70
  *(.debug_frame)

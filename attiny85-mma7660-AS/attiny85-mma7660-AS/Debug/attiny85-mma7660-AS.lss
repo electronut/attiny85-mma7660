@@ -23,7 +23,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   9 .debug_abbrev 000001d6  00000000  00000000  00000cf6  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_line   00000267  00000000  00000000  00000ecc  2**0
+ 10 .debug_line   00000265  00000000  00000000  00000ecc  2**0
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_frame  00000070  00000000  00000000  00001134  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -542,9 +542,9 @@ int main()
 	DDRB = (0x1 << PB2);
  19a:	84 e0       	ldi	r24, 0x04	; 4
  19c:	87 bb       	out	0x17, r24	; 23
-		i2c_rep_start((0x4C << 1)|0x1);
-		data = i2c_readNak();
-#endif
+    
+    // main loop 
+    while (1) {	
     
     uint8_t x, y, z;
     mma7660_get_data(0x00, &x);
