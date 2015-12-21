@@ -10,4 +10,4 @@ and the Atmel ICE debugger.
 
 You can read more here:
 
-http://electronut.in/
+http://electronut.in/attiny85-mma7660/
