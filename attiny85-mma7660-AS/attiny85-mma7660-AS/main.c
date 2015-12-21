@@ -98,7 +98,8 @@ int main()
 
     float aSq = ax*ax + ay*ay + az*az;
 	
-    if (aSq > 2.0) {
+	// MMA7660 limit is +-1.5g
+    if (aSq > 2.0 && aSq < 6.75) {
       // flash# 1:
       // set high
       PORTB |= (0x1 << PB2);
