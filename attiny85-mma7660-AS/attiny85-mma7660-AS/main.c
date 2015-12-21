@@ -79,7 +79,7 @@ int main()
 	// set MODE to active
 	mma7660_set_data(0x07,0b00011001);
 
-	//DDRB = 0b00001000;
+	DDRB = (0x1 << PB2);
     
     // main loop 
     while (1) {	
@@ -115,15 +115,34 @@ int main()
     // for debugging - breakpt
     ret = 5 + ax + ay + az;
 
-		/*
 		// flash# 1:
-		// set PB3 high
-		PORTB = 0b00001000;
+		// set high
+		PORTB |= (0x1 << PB2);
+		_delay_ms(20);// set up MMA7660:
+
+		// set MODE to stand by
+		mma7660_set_data(0x07,0x00);
+
+		// set up SR register
+		mma7660_set_data(0x08,0x00);
+
+		// set up interrupt register
+		mma7660_set_data(0x06,0b11100100);
+
+		// tap detection reg
+		mma7660_set_data(0x09,11);
+		
+		// tap debounce reg
+		mma7660_set_data(0x0a,11);
+
+		// count
+		mma7660_set_data(0x05, 0xff);
+		
+		// set MODE to active
+		mma7660_set_data(0x07,0b00011001);
+		// set low
+		PORTB &= ~(0x1 << PB2);
 		_delay_ms(20);
-		// set PB3 low
-		PORTB = 0b00000000;
-		_delay_ms(20);
-		*/
 		
     _delay_ms(250);
 		
