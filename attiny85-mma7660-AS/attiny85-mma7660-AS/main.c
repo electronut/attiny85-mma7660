@@ -43,90 +43,72 @@ void mma7660_get_data(uint8_t reg, uint8_t* data)
     // issue Repeated START
     i2c_rep_start((0x4C << 1)|0x1);
     // read data and issue STOP
-    data = i2c_readNak();
+    *data = i2c_readNak();
 }
 
 unsigned char ret;
-uint8_t data;
+uint8_t gdata;
+float ax, ay, az;
 
 int main()
 {
 	
-    // initialize I2C
-	i2c_init();
+  // initialize I2C
+  i2c_init();
+	
+  // set up MMA7660:
 
-	//DDRB = 0b00001000;
+  // set MODE to stand by
+  mma7660_set_data(0x07,0x00);
+
+  // set up SR register
+  mma7660_set_data(0x08,0x00);
+
+  // set up interrupt register
+  mma7660_set_data(0x06,0b11100100);
+
+  // tap detection reg
+  mma7660_set_data(0x09,11);
+	
+  // tap debounce reg
+  mma7660_set_data(0x0a,11);
+
+  // count
+  mma7660_set_data(0x05, 0xff);
+	
+  // set MODE to active
+  mma7660_set_data(0x07,0b00011001);
+
+  DDRB = (0x1 << PB2);
     
-    // main loop 
-    while (1) {	
-				
-#if 0
-        ret = i2c_start((0x4C << 1)|0x0);
-		i2c_write(0x04);
-		i2c_rep_start((0x4C << 1)|0x1);
-		data = i2c_readNak();
-
-		ret = i2c_start((0x4C << 1)|0x0);
-		i2c_write(0x07);
-		i2c_write(0b00011001);
-		i2c_stop();
-		
-		_delay_ms(1);
-		
-		ret = i2c_start((0x4C << 1)|0x0);
-		i2c_write(0x02);
-		i2c_rep_start((0x4C << 1)|0x1);
-		data = i2c_readNak();
-#endif
-
-    // set up MMA7660:
-
-    // set MODE to stand by
-    mma7660_set_data(0x07,0x00);
-
-	// set up SR register
-	mma7660_set_data(0x08,0x00);
-
-	// set up interrupt register
-	mma7660_set_data(0x06,0b11100100);
-
-	// tap detection reg
-	mma7660_set_data(0x09,11);
-		
-	// tap debounce reg
-	mma7660_set_data(0x0a,11);
-
-	// count
-	mma7660_set_data(0x05, 0xff);
- 
-	// set MODE to active
-	mma7660_set_data(0x07,0b00011001);
-
+  // main loop 
+  while (1) {	
     
     uint8_t x, y, z;
     mma7660_get_data(0x00, &x);
     mma7660_get_data(0x01, &y);
     mma7660_get_data(0x02, &z);
     
-    float ax = gLUT[x];
-    float ay = gLUT[y];
-    float az = gLUT[z];
+    ax = gLUT[x];
+    ay = gLUT[y];
+    az = gLUT[z];
     
     // for debugging - breakpt
     ret = 5 + ax + ay + az;
 
-		/*
-		// flash# 1:
-		// set PB3 high
-		PORTB = 0b00001000;
-		_delay_ms(20);
-		// set PB3 low
-		PORTB = 0b00000000;
-		_delay_ms(20);
-		*/
-		
-    _delay_ms(250);
-		
+    float aSq = ax*ax + ay*ay + az*az;
+	
+    if (aSq > 2.0) {
+      // flash# 1:
+      // set high
+      PORTB |= (0x1 << PB2);
+      _delay_ms(20);// set up MMA7660:
+      // set low
+      PORTB &= ~(0x1 << PB2);
     }
+		
+    //_delay_ms(250);
+		
+  }
 }
 
