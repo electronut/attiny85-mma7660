@@ -1,5 +1,11 @@
+![](attiny85-mma7660-ice1.jpg)
+
 In this project, we communicate with a Freescale MMA7660 
 accelerometer using the Atmel ATtiny85. 
+
+Here's the schematic:
+
+![](attiny85-mma7660-schematic.png)
 
 I2C communication is done using the I2CMaster library from Peter Fleury:
 
